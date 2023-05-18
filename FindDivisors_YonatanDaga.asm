@@ -1,102 +1,98 @@
 ; -  Find Number Divisors   -
 ; - Written by Yonatan Daga -
 
-
 .MODEL	small
 .STACK	100h
 
 .DATA
-	prompt	     db 'Enter a 4-digit number: $'
-	minus	     dw 0
+	prompt		db	'Enter a 4-digit number: $'
+	minus		dw 	0
 	
-	str_len      dw 5
-	num_str      db 5 dup(0) 
+	str_len		dw 	5
+	num_str		db 	5 dup(0) 
 	
-	num_final    dw 0	
+	num_final	dw 	0	
 	
-	my_string	 db '$$$$$$'
-	len			 db 5
+	my_string	db 	'$$$$$$'
+	len		db 	5
 	
-	backup		 dw 0     
-	new_line	 db 13,10,'$'
+	backup	 	dw 	0     
+	new_line	db 	13,10,'$'
 
-	divide		 db ' : $'
-	equal		 db ' = $'
-	comma	 	 db ' , $'
-	minus_symbol db '-$'
+	divide	 	db 	' : $'
+	equal		db 	' = $'
+	comma	 	db 	' , $'
+	minus_symbol 	db 	'-$'
 
-	main		 dw 0
-	second		 dw 0
-	result		 dw 0
-	remain		 dw 0
-	
+	main		dw 	0
+	second	 	dw 	0
+	result	 	dw 	0
+	remain	 	dw 	0
 	
 .CODE
-	mov  ax, @data
-	mov	 ds, ax
+	mov	ax, @data
+	mov	ds, ax
 	
 	; PRINT PROMPT:
-	push offset prompt
-	call print
-	
+	push	offset prompt
+	call	print
 	
 	; GET 4-DIGIT INPUT:
-	mov  cl, 0
+	mov	cl, 0
 	input:
 		; get input
-		mov ah, 01h
-		int 21h
+		mov	ah, 01h
+		int	21h
 		
 		; load offset into bx
-		mov bx, offset num_str
+		mov	bx, offset num_str
 		
 		; get to the correct element
-		mov ch, 0
-		add bx, cx
+		mov	ch, 0
+		add	bx, cx
 		
 		; load input into array
-		mov [bx], al
+		mov	[bx], al
 	
-	cmp  cl, 3
-	jae  end_loop
-	inc  cl
-	jmp  input
+	cmp	cl, 3
+	jae	end_loop
+	inc	cl
+	jmp	input
 	
 	end_loop:
 	; empty label
 	
-	
+
 	; CHECK FOR A MINUS SIGN:
-	call check_minus
+	call	check_minus
 	
-	push offset new_line
-	call print
+	push	offset new_line
+	call	print
 	
 	; CONVERT STR TO NUM:
-	push offset num_str 
-	push str_len
-	call str_to_num
+	push	offset num_str 
+	push	str_len
+	call	str_to_num
 	
-	push num_final
-	call printDivisors
-	
-	
+	push	num_final
+	call	printDivisors
 	
 	exit:
-		mov ah, 4ch
-		int 21h
+		mov	ah, 4ch
+		int	21h
 
 
-	; Procedure 1: Print
-	; Gets:	String | as reference
+	; Procedure 1:	Print
+	; Gets:		1. String	| Reference
 	; Prints the string to the console.
+
 	print proc 
 		; backup registers
-		push bp
-		push ax
-		push dx
+		push	bp
+		push	ax
+		push	dx
 		
-		mov  bp, sp	; use bp as the stack pointer
+		mov	bp, sp	; use bp as the stack pointer
 		
 		; CURRENT STACK STATE:
 		;  [BP+0] - dx backup
@@ -106,14 +102,14 @@
 		;  [BP+8] - string reference
 		
 		; Print the string
-		mov  ah, 09h
-		mov  dx, [bp+8]
-		int  21h
+		mov	ah, 09h
+		mov	dx, [bp+8]
+		int	21h
 		
 		; Restore registers 
-		pop  dx
-		pop  ax
-		pop  bp
+		pop	dx
+		pop	ax
+		pop	bp
 		
 		ret 
 	print endp
@@ -124,43 +120,42 @@
 	; 	If there is a minus:
 	;		1. Gets another digit as an input, adds it to the string.
 	; 		2. Sets "minus" var to 1.
+
 	check_minus proc
 		; backup registers
-		push bx
-		push ax
+		push	bx
+		push	ax
 		
-		cmp num_str, '-'
-		je  another_digit
-		jne end_proc
+		cmp	num_str, '-'
+		je	another_digit
+		jne	end_proc
 		
 		another_digit:
-			mov bx, offset minus
-			mov [bx], 1
+			mov	bx, offset minus
+			mov	[bx], 1
 			
 			; get input
-			mov ah, 01h
-			int 21h
+			mov	ah, 01h
+			int	21h
 			
 			; get to the correct element
-			mov bx, offset num_str
-			add bx, 4
+			mov	bx, offset num_str
+			add	bx, 4
 			
 			; add input to arr
-			mov [bx], al
-			
+			mov	[bx], al
+
 		end_proc:
 			; restore registers
-			pop ax
-			pop bx
-			
+			pop	ax
+			pop	bx
 			ret
-			
 	check_minus endp
 	
 	
 	; Procedure 3: Convert String to Number
-	; Gets:		1. String containing a number | as reference
-	; 			2. Length 					  | as value
+	; Gets:		1. String containing a number	| Reference
+	; 			2. Length 				| Value
 	; Sets variable "num_final" to the number inside the string.
 	
 	str_to_num proc
@@ -172,8 +167,8 @@
 		push bp
 		push si
 		
-		
 		mov bp, sp
+		
 		; CURRENT STACK STATE:
 		;	[BP+0]  - SI Backup
 		;	[BP+2]  - BP Backup
@@ -185,21 +180,18 @@
 		; 	[BP+14] - String Length
 		; 	[BP+16] - String Reference
 		
-		mov ax, [bp+14]	; str len
+		mov ax, [bp+14]		; str len
 		sub ax, 1
 		add ax, minus
 		
-		mov bx, [bp+16]	; str reference
+		mov bx, [bp+16]		; str reference
 		mov dx, 1000	
 		
-		mov cx, minus ; loop counter - starts from 1 if there's a minus in the string
+		mov cx, minus 		; loop counter - starts from 1 if there's a minus in the string
 		my_loop:
-			mov bx, [bp+16] ; reset bx to str reference
+			mov bx, [bp+16]	; reset bx to str reference
 			add bx, cx		; get to the right element
-			
-			
 			sub [bx], 30h	; convert char to digit
-			
 			
 			; backup registers
 			push ax
@@ -210,13 +202,12 @@
 			; MULTIPLY [BX] BY DX
 			mov ax, [bx]
 			mov ah, 0
-			mul dx
+			mul dx		; ax now stores the result
 			
-			; ax now stores the result
 			mov bx, offset num_final
 			add [bx], ax
 			
-			pop dx ; restore dx
+			pop dx 		; restore dx
 			
 			; DIVIDE DX BY 10
 			mov ax, dx
@@ -224,8 +215,6 @@
 			div cl
 			mov ah, 0
 			mov dx, ax
-			
-			
 			
 			pop cx
 			pop bx
@@ -236,12 +225,10 @@
 		cmp cx, ax
 		jb my_loop
 		
-		
 		; if minus=1, make num_final negative.
 		;cmp minus, 1
 		;jne end_proc3
 		;neg num_final
-		
 		
 		end_proc3:
 			; restore registers
@@ -250,56 +237,55 @@
 			pop dx
 			pop cx
 			pop bx
-			pop ax
-			
+			pop ax	
 			ret
 	str_to_num endp
 	
-	
+
 	; Procedure 4: Convert Number to String
-	; Gets:			1. Number	| As Value
-	; 				2. String	| As Reference
+	; Gets:		1. Number	| Value
+	; 			2. String	| Reference
 	; Converts the number to string, puts it in the reference.
 	
 	proc num_to_str
-    	push bp
-    	mov  bp, sp
-    	push cx
-    	push bx
-    	mov  ax, [bp+4]
-    	mov  si, [bp+6]
-    	mov  bx, 10
-    	xor  cx, cx
+		push bp
+		mov  bp, sp
+		push cx
+		push bx
+		mov  ax, [bp+4]
+		mov  si, [bp+6]
+		mov  bx, 10
+		xor  cx, cx
     	
-    	digit1:
-    		xor  dx, dx
-    		test ax, ax
-    		jns  positive
-    		neg ax
-    		mov byte ptr [si], '-'
-    		inc si
-    	positive:
-    		div  bx
-    		push dx
-    		inc  cx
-    		cmp  ax,0
-    		jne  digit1
-    	
-    	convdigit:
-    		pop  dx
-    		add  dl, 30h
-    		mov  [si], dl
-    		inc  si
-    		loop convdigit
-    	pop  bx
-    	pop  cx
-    	pop  bp
-    	ret  4
-    endp num_to_str
+		digit1:
+			xor  dx, dx
+			test ax, ax
+			jns  positive
+			neg ax
+			mov byte ptr [si], '-'
+			inc si
+		positive:
+			div  bx
+			push dx
+			inc  cx
+			cmp  ax,0
+			jne  digit1
+		convdigit:
+			pop  dx
+			add  dl, 30h
+			mov  [si], dl
+			inc  si
+			loop convdigit
+		pop  bx
+		pop  cx
+		pop  bp
+		ret  4
+	endp num_to_str
 
 
 	; Procedure 5: Reset String
 	; Sets every value of "my_string" to '$'.
+
 	proc resetStr
 		push bp
 		mov bp, sp
@@ -321,7 +307,7 @@
 	
 	
 	; Procedure 6: Print Divisors
-	; Gets:		   Number		| As Value	
+	; Gets:		1. Number	| Value	
 	; Prints all of the divisors for the number 
 	
 	proc printDivisors
@@ -334,8 +320,7 @@
 		
 		mov cx, [bp+4]
 		mov ax, [bp+4]
-		
-		
+
 		myloop:
 			mov backup, ax
 			
@@ -464,10 +449,8 @@
 			
 			call resetStr
 			
-			
 			push offset minus_symbol ; print minus sign before result
 			call print
-			
 			
 			push offset my_string
 			push result
@@ -494,11 +477,7 @@
 			call print
 			
 			call resetStr
-			
-			
-			
-			
-			
+
 			
 			continue_loop:
 			; empty
@@ -518,8 +497,5 @@
 		pop bp
 		ret
 	endp printDivisors
-
-	
-	
 	
 END
