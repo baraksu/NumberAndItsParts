@@ -5,29 +5,28 @@
 .STACK	100h
 
 .DATA
-	prompt		db	'Enter a 4-digit number: $'
-	minus		dw 	0
+	prompt		db	'Enter a 4-digit number: $'	; prompt to be printed
+	minus		dw 	0				; 1 if the input is a negative number
 	
-	str_len		dw 	5
-	num_str		db 	5 dup(0) 
+	str_len		dw 	5				; string length
+	num_str		db 	5 dup(0) 			; the input number as a string
+	num_final	dw 	0				; the input number as a number
 	
-	num_final	dw 	0	
+	my_string	db 	'$$$$$$'			; a string that its content change. used to print different things.
+	len		db 	5				; the string's length
 	
-	my_string	db 	'$$$$$$'
-	len		db 	5
+	backup	 	dw 	0     				; used to backup different registers in the code
 	
-	backup	 	dw 	0     
-	new_line	db 	13,10,'$'
-
+	new_line	db 	13,10,'$'			; different characters to be printed in the appropriate time
 	divide	 	db 	' : $'
 	equal		db 	' = $'
-	comma	 	db 	' , $'
-	minus_symbol 	db 	'-$'
+	comma		db 	' , $'
+	minus_symbol	db 	'-$'
 
-	main		dw 	0
-	second	 	dw 	0
-	result	 	dw 	0
-	remain	 	dw 	0
+	main		dw 	0				; will store the first number of every equation
+	second	 	dw 	0				; will store the second number of every equation
+	result	 	dw 	0				; will store the result of every equation
+	remain	 	dw 	0				; will store the remainder of every equation
 	
 .CODE
 	mov	ax, @data
