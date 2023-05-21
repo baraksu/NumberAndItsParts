@@ -154,7 +154,7 @@
 	
 	; Procedure 3: Convert String to Number
 	; Gets:		1. String containing a number	| Reference
-	; 			2. Length 				| Value
+	; 		2. Length 			| Value
 	; Sets variable "num_final" to the number inside the string.
 	
 	str_to_num proc
@@ -189,7 +189,7 @@
 		mov cx, minus 		; loop counter - starts from 1 if there's a minus in the string
 		my_loop:
 			mov bx, [bp+16]	; reset bx to str reference
-			add bx, cx		; get to the right element
+			add bx, cx	; get to the right element
 			sub [bx], 30h	; convert char to digit
 			
 			; backup registers
@@ -243,7 +243,7 @@
 
 	; Procedure 4: Convert Number to String
 	; Gets:		1. Number	| Value
-	; 			2. String	| Reference
+	; 		2. String	| Reference
 	; Converts the number to string, puts it in the reference.
 	
 	proc num_to_str
@@ -478,7 +478,6 @@
 			
 			call resetStr
 
-			
 			continue_loop:
 			; empty
 			
