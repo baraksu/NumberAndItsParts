@@ -418,6 +418,10 @@
 			jne continue_loop
 			
 			; if minus=1:
+			
+			push offset minus_symbol ; print minus sign main num
+			call print
+			
 			push offset my_string
 			push main
 			call num_to_str
@@ -447,9 +451,6 @@
 			call print
 			
 			call resetStr
-			
-			push offset minus_symbol ; print minus sign before result
-			call print
 			
 			push offset my_string
 			push result
