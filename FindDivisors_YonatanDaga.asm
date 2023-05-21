@@ -18,7 +18,7 @@
 	backup	 	dw 	0     				; used to backup different registers in the code
 	
 	new_line	db 	13,10,'$'			; different characters to be printed in the appropriate time
-	divide	 	db 	' : $'
+	divide	 	db 	'  : $'
 	equal		db 	' = $'
 	comma		db 	' , $'
 	minus_symbol	db 	'-$'
