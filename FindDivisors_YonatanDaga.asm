@@ -28,7 +28,7 @@
 	result	 	dw 	0				; will store the result of every equation
 	remain	 	dw 	0				; will store the remainder of every equation
 	
-	message		db '*****************************',13,10,'---- Find Number Divisors ---',13,10,'-- Written by Yonatan Daga --',13,10,'*****************************',13,10,13,10,'$'
+	message		db 	'*****************************',13,10,'---- Find Number Divisors ---',13,10,'-- Written by Yonatan Daga --',13,10,'*****************************',13,10,13,10,'$'
 	
 .CODE
 	mov	ax, @data
