@@ -154,7 +154,7 @@ example. This time, we'll also look at how the variables change in real-time.
 
 > Note: Only the important variables can be seen here.
 
-<video autoplay loop muted playsinline src="https://github.com/baraksu/NumberAndItsParts/blob/main/Screenshots/Run1.webm?raw=true" controls="controls" style="display: block; margin-left: auto; margin-right: auto; width: 60%;"/>
+<div style="width:100%;height:0px;position:relative;padding-bottom:105.939%;"><iframe src="https://streamable.com/e/lafjdh" frameborder="0" width="100%" height="100%" allowfullscreen style="width:100%;height:100%;position:absolute;left:0px;top:0px;overflow:hidden;"></iframe></div>
 
 We can see here that the number 1000 has been entered, but this time we can also see what happens
 "behind the scenes". So what are all of these variables?
