@@ -152,9 +152,9 @@ often.
 In order to better understand how the program works, let's take another look at the first running
 example. This time, we'll also look at how the variables change in real-time.
 
-> Note: Only the important variables can be seen here.
+The video [can be watched here.](https://streamable.com/lafjdh)
 
-<iframe src="https://streamable.com/e/lafjdh" frameborder="0" width="100%" height="100%" style="width:100%;height:100%;position:absolute;left:0px;top:0px;overflow:hidden;"></iframe>
+> Note: Only the important variables are visible in the video.
 
 We can see here that the number 1000 has been entered, but this time we can also see what happens
 "behind the scenes". So what are all of these variables?
