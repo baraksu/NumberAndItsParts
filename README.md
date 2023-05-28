@@ -154,14 +154,7 @@ example. This time, we'll also look at how the variables change in real-time.
 
 > Note: Only the important variables can be seen here.
 
-<video autoplay loop muted playsinline style="
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-    width: 60%;">
-  <source src="https://github.com/baraksu/NumberAndItsParts/blob/main/Screenshots/Run1.webm?raw=true"
-  type="video/webm">
-</video>
+https://github.com/baraksu/NumberAndItsParts/blob/main/Screenshots/Run1.webm?raw=true
 
 We can see here that the number 1000 has been entered, but this time we can also see what happens
 "behind the scenes". So what are all of these variables?
