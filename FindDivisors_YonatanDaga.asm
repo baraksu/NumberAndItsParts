@@ -251,7 +251,7 @@
 	; 		2. String	| Reference
 	; Converts the number to string, puts it in the reference.
 	
-	proc num_to_str
+	num_to_str proc
 		push bp
 		mov  bp, sp
 		push cx
@@ -262,18 +262,12 @@
 		xor  cx, cx
     	
 		digit1:
-			xor  dx, dx
-			test ax, ax
-			jns  positive
-			neg ax
-			mov byte ptr [si], '-'
-			inc si
-		positive:
-			div  bx
-			push dx
-			inc  cx
-			cmp  ax,0
-			jne  digit1
+		xor  dx, dx
+		div  bx
+		push dx
+		inc  cx
+		cmp  ax,0
+		jne  digit1
 		convdigit:
 			pop  dx
 			add  dl, 30h
@@ -290,7 +284,7 @@
 	; Procedure 5: Reset String
 	; Sets every value of "my_string" to '$'.
 
-	proc resetStr
+	resetStr proc
 		push bp
 		mov bp, sp
 		
@@ -314,7 +308,7 @@
 	; Gets:		1. Number	| Value	
 	; Prints all of the divisors for the number 
 	
-	proc printDivisors
+	printDivisors proc
 		push bp
 		mov  bp, sp
 		
