@@ -68,6 +68,7 @@
 	
 
 	; CHECK FOR A MINUS SIGN:
+	push    offset minus
 	call	check_minus
 	
 	push	offset new_line
@@ -127,15 +128,27 @@
 
 	check_minus proc
 		; backup registers
+		mov bp, sp
 		push	bx
 		push	ax
+		
+		; STACK:
+		; bp+0 - ax backup
+		; bp+2 - bx backup
+		; bp+4 - return address
+		; bp+6 - minus offset
+
 		
 		cmp	num_str, '-'
 		je	another_digit
 		jne	end_proc
 		
+		;mov bp, sp
+		
 		another_digit:
-			mov	bx, offset minus
+            ;mov bx, offset minus
+            
+            mov bx, [bp+2]
 			mov	[bx], 1
 			
 			; get input
